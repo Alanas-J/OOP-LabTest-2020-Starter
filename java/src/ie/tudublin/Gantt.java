@@ -73,7 +73,7 @@ public class Gantt extends PApplet
 
 
 			// grid numbers ___________________________
-			stroke(255);
+			fill(255);
 			textSize(12);
 			textAlign(CENTER);
 			text(""+i, posX, gridY1 - 10);
@@ -86,15 +86,28 @@ public class Gantt extends PApplet
 		textSize(16);
 		for( int i = 0; i < tasks.size(); i++){
 
-
-			float initialGap = height*.05f;
-			float taskGap = height*.01f;
+			float initialGap = height*.1f;
+			float taskGap = height*.005f;
 			float taskWidth = height*.05f;
 			float taskTextOffset = gridX1*.7f;
 			Task t = tasks.get(i);
 
-			
+			//text render
+			fill(255);
 			text(t.getTaskName(),gridX1 - taskTextOffset, gridY1 + initialGap + (taskWidth + taskGap)*i);
+
+			float posX1 = map(t.getStart(),1,30, gridX1, gridX2);
+			float posX2 = map(t.getEnd(),1,30, gridX1, gridX2);
+			float width = posX2-posX1;
+
+
+			float rectColor = map(i,0,tasks.size(),0,255);
+			fill( (int)rectColor,255,255);
+			noStroke();
+
+			rect(posX1, gridY1 - (taskWidth/2) + initialGap + (taskWidth + taskGap)*i,width,taskWidth,5);
+
+
 
 		} // end of loop
 

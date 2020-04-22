@@ -39,16 +39,22 @@ public class Gantt extends PApplet
 	
 	public void mousePressed()
 	{
-		println("Mouse pressed");	
+		//println("Mouse pressed");	
 	}
 
 	public void mouseDragged()
 	{
-		println("Mouse dragged");
+		//println("Mouse dragged");
 	}
 
+
+	
+	//adjustment variables
+	int endFlag = 0;	
+	int target = 0;
 	public void displayTasks(){
 
+		
 		//Drawing of grid
 		float gridX1 = width*.25f;
 		float gridX2 = width*.95f;
@@ -109,61 +115,74 @@ public class Gantt extends PApplet
 			rect(posX1, postY1,width,taskWidth,5);
 
 
-
-
-			int dragFlag = 0;
-			int target = 0;
-
-
+			
 			// Code to adjust gant chart tasks=====================================================
+			
+			boolean success = false;
+			// Mouse TASK CROSSOVER detection code ________________________________________________________
+			if(mouseY >= postY1 && mouseY<= postY1 + taskWidth ){
 
-			// Mouse detection code ________________________________________________________
-			if(mousePressed){
-				
-				if(mouseY >= postY1 && mouseY<= postY1 + width ){
+				if(mousePressed){
 
-					if(mouseX >= posX1 && mouseX <= posX1 + 20){
-						dragFlag = 1;
-						target = i;
-					}
-					if(mouseX <= posX1 && mouseX >= posX1 - 20){
-						dragFlag = 2;
-						target = i;
-					} // if in X range eg in width of one of bars
-
-				} // if in Y Range eg at the height of one of bars
-				
-			}
-			else{
-				dragFlag = 0;
-			}
-
-			// Adjustment code ________________________________________________________
-			Task targetedTask = tasks.get(target);
-			int dragVar;
-
-			//if adjusting start
-			if(dragFlag == 1){
-				
-				dragVar = map(mouseX, gridX1, gridX2, 1, 30);
-
-
-				if(dragVar = mouseX){
-					targetedTask.setStart(start);
 				}
+				else if(mouseX >= posX1 && mouseX <= posX1 + 20){
+					
+					//System.out.println("at start" + i);
+
+					endFlag = 1;
+					target = i;
+					success = true;
 				
+				}
+				else if(mouseX <= posX2 && mouseX >= posX2 - 20){
+					
 
-			}
+					//System.out.println("at end" + i);
 
-			//if adjusting end
-			if(dragFlag == 2){
+					endFlag = 2;
+					target = i;
+					success = true;
 
-			}
-
+				} // if in X range eg in width of one of bars
+				else if(i+1 == tasks.size() && success == false){
+					endFlag = 0;
+				}
+			} // if in Y Range eg at the height of one of bars
 
 		} // end of loop
 
-	   
+
+
+
+		// Task Adjustment code _______________________________________________________
+		int dragVar;
+		Task targetTask = tasks.get(target);
+
+		if(mousePressed){
+			if(endFlag == 1){
+				
+				dragVar = (int) map(mouseX,gridX1,gridX2,1,30);
+
+				if(dragVar < targetTask.getEnd() && dragVar > 0){
+					targetTask.setStart(dragVar);
+				}
+
+
+			}
+
+			if(endFlag == 2){
+			
+				dragVar = (int) map(mouseX,gridX1,gridX2,1,30) + 1;
+
+				if(dragVar > targetTask.getStart() && dragVar <= 30){
+					targetTask.setEnd(dragVar);
+				}
+
+			}
+		}
+		
+		
+			
 	} // end of method
 	
 	

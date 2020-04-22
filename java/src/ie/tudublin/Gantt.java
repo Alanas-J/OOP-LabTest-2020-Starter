@@ -74,6 +74,7 @@ public class Gantt extends PApplet
 
 			// grid numbers ___________________________
 			stroke(255);
+			textSize(12);
 			textAlign(CENTER);
 			text(""+i, posX, gridY1 - 10);
 
@@ -81,9 +82,23 @@ public class Gantt extends PApplet
 
 		
 		// Gant Chart Population Loop
-		for(Task t:tasks){
-            		
+		textAlign(LEFT,CENTER);
+		textSize(16);
+		for( int i = 0; i < tasks.size(); i++){
+
+
+			float initialGap = height*.05f;
+			float taskGap = height*.01f;
+			float taskWidth = height*.05f;
+			float taskTextOffset = gridX1*.7f;
+			Task t = tasks.get(i);
+
+			
+			text(t.getTaskName(),gridX1 - taskTextOffset, gridY1 + initialGap + (taskWidth + taskGap)*i);
+
 		} // end of loop
+
+
 		   
 	} // end of method
 	

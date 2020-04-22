@@ -105,14 +105,65 @@ public class Gantt extends PApplet
 			fill( (int)rectColor,255,255);
 			noStroke();
 
-			rect(posX1, gridY1 - (taskWidth/2) + initialGap + (taskWidth + taskGap)*i,width,taskWidth,5);
+			float postY1 = gridY1 - (taskWidth/2) + initialGap + (taskWidth + taskGap)*i;
+			rect(posX1, postY1,width,taskWidth,5);
 
+
+
+
+			int dragFlag = 0;
+			int target = 0;
+
+
+			// Code to adjust gant chart tasks=====================================================
+
+			// Mouse detection code ________________________________________________________
+			if(mousePressed){
+				
+				if(mouseY >= postY1 && mouseY<= postY1 + width ){
+
+					if(mouseX >= posX1 && mouseX <= posX1 + 20){
+						dragFlag = 1;
+						target = i;
+					}
+					if(mouseX <= posX1 && mouseX >= posX1 - 20){
+						dragFlag = 2;
+						target = i;
+					} // if in X range eg in width of one of bars
+
+				} // if in Y Range eg at the height of one of bars
+				
+			}
+			else{
+				dragFlag = 0;
+			}
+
+			// Adjustment code ________________________________________________________
+			Task targetedTask = tasks.get(target);
+			int dragVar;
+
+			//if adjusting start
+			if(dragFlag == 1){
+				
+				dragVar = map(mouseX, gridX1, gridX2, 1, 30);
+
+
+				if(dragVar = mouseX){
+					targetedTask.setStart(start);
+				}
+				
+
+			}
+
+			//if adjusting end
+			if(dragFlag == 2){
+
+			}
 
 
 		} // end of loop
 
-
-		   
+	   
 	} // end of method
 	
 	

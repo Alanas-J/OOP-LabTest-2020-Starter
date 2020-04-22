@@ -47,6 +47,32 @@ public class Gantt extends PApplet
 		println("Mouse dragged");
 	}
 
+	public void displayTasks(){
+
+		//Drawing of grid
+		float gridX1 = width*.25f;
+		float gridX2 = width*.95f;
+		float gridY1 = height*.075f;
+		float gridY2 = height*.925f;
+
+		// Line loop
+		for( int i = 1; i <= 30; i++){
+
+
+			if(i%2 == 0){
+				stroke(100);
+			}
+			else{
+				stroke(200);
+			}
+
+			float posX = map(i,1,30, gridX1, gridX2);
+
+			line(posX, gridY1, posX, gridY2);
+
+		} 
+
+	}
 	
 	
 	public void setup() 
@@ -58,5 +84,6 @@ public class Gantt extends PApplet
 	public void draw()
 	{			
 		background(0);
+		displayTasks();
 	}
 }

@@ -59,6 +59,7 @@ public class Gantt extends PApplet
 		for( int i = 1; i <= 30; i++){
 
 
+			// Line code _______________________________
 			if(i%2 == 0){
 				stroke(100);
 			}
@@ -70,15 +71,28 @@ public class Gantt extends PApplet
 
 			line(posX, gridY1, posX, gridY2);
 
-		} 
 
-	}
+			// grid numbers ___________________________
+			stroke(255);
+			textAlign(CENTER);
+			text(""+i, posX, gridY1 - 10);
+
+		} // end of loop
+
+		
+		// Gant Chart Population Loop
+		for(Task t:tasks){
+            		
+		} // end of loop
+		   
+	} // end of method
 	
 	
 	public void setup() 
 	{
 		loadTasks();
 		printTasks();
+		colorMode(HSB);
 	}
 	
 	public void draw()
